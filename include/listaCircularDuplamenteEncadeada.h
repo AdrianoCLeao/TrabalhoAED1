@@ -14,4 +14,6 @@ typedef struct {
     int tamanho;
 } ListaCircularDupla;
 
+ListaCircularDupla* criarLista();
+
 #endif
