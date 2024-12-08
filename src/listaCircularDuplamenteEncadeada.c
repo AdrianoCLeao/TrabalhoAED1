@@ -56,7 +56,7 @@ bool inserirFim(ListaCircularDupla* lista, const char* nome) {
     No* novoNo = (No*) malloc(sizeof(No));
     if (!novoNo) return false;
 
-    novoNo->nome = strdup(nome); // Duplica a string
+    novoNo->nome = strdup(nome);
     if (!novoNo->nome) {
         free(novoNo);
         return false;
@@ -69,6 +69,43 @@ bool inserirFim(ListaCircularDupla* lista, const char* nome) {
     lista->inicio->anterior = novoNo;
 
     lista->tamanho++;
+    return true;
+}
+
+bool removerInicio(ListaCircularDupla* lista) {
+    if (!lista || lista->tamanho == 0) return false;
+
+    No* removido = lista->inicio;
+    if (lista->tamanho == 1) {
+        lista->inicio = NULL;
+    } else {
+        No* ultimo = lista->inicio->anterior;
+        lista->inicio = removido->proximo;
+        lista->inicio->anterior = ultimo;
+        ultimo->proximo = lista->inicio;
+    }
+    free(removido->nome);
+    free(removido);
+    lista->tamanho--;
+    return true;
+}
+
+bool removerFim(ListaCircularDupla* lista) {
+    if (!lista || lista->tamanho == 0) return false;
+    if (lista->tamanho == 1) {
+        return removerInicio(lista);
+    }
+
+    No* ultimo = lista->inicio->anterior;
+    No* penultimo = ultimo->anterior;
+
+    penultimo->proximo = lista->inicio;
+    lista->inicio->anterior = penultimo;
+
+    free(ultimo->nome);
+    free(ultimo);
+
+    lista->tamanho--;
     return true;
 }
 
