@@ -20,5 +20,6 @@ bool inserirInicio(ListaCircularDupla* lista, const char* nome);
 bool inserirFim(ListaCircularDupla* lista, const char* nome);
 bool removerInicio(ListaCircularDupla* lista);
 bool removerFim(ListaCircularDupla* lista);
+void exibirLista(ListaCircularDupla* lista);
 
 #endif

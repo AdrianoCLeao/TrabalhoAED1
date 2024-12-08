@@ -109,3 +109,17 @@ bool removerFim(ListaCircularDupla* lista) {
     return true;
 }
 
+void exibirLista(ListaCircularDupla* lista) {
+    if (!lista || lista->tamanho == 0) {
+        printf("Lista vazia.\n");
+        return;
+    }
+
+    No* atual = lista->inicio;
+    printf("Elementos da lista: ");
+    do {
+        printf("%s ", atual->nome);
+        atual = atual->proximo;
+    } while (atual != lista->inicio);
+    printf("\n");
+}
