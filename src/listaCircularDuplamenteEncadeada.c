@@ -2,6 +2,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* 
+    Comentários para ajudar a lésbica:
+
+    - Essa implementação é da lista circular duplamente encadeada. 
+      A lista é formada por "nós", que armazenam uma string e apontam para o próximo e o anterior.
+    
+    - Explicação das funções:
+
+    1. **criarLista**: Cria e inicializa a lista. Retorna um ponteiro pra lista.
+
+    2. **destruirLista**: Acaba com a lista. Mata todos os nós um por um 
+       e, no final, libera a própria lista. 
+
+    3. **inserirInicio**: Insere um nó no começo da lista. Se a lista for vazia, cria o primeiro nó e 
+       conecta ele a ele mesmo (lembrando: circular). Se já tem coisa, liga o novo nó no início e no último nó.
+
+    4. **inserirFim**: Quase igual ao "inserirInicio", mas joga o novo nó no final da lista. 
+       Se a lista estiver vazia, só reaproveita o inserirInicio.
+
+    5. **removerInicio**: Tira o nó que tá no início da lista. Ajusta os ponteiros pra não quebrar 
+       a ligação entre o último e o novo início.
+
+    6. **removerFim**: Parecido com o removerInicio, mas tira o nó do final. Se a lista só tiver 
+       um nó, ele chama o removerInicio direto.
+
+    7. **exibirLista**: Mostra todos os elementos da lista na ordem, começando do início. 
+       Dá um "loop" nos elementos e imprime os valores. Se não tem nada na lista, diz que tá vazia.
+*/
 ListaCircularDupla* criarLista() {
     ListaCircularDupla* lista = (ListaCircularDupla*) malloc(sizeof(ListaCircularDupla));
     if (lista) {
