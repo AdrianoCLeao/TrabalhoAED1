@@ -10,3 +10,13 @@ ListaCircularDupla* criarLista() {
     }
     return lista;
 }
+
+void destruirLista(ListaCircularDupla* lista) {
+    if (lista) {
+        while (lista->tamanho > 0) {
+            removerInicio(lista);
+        }
+        free(lista);
+    }
+}
+

@@ -15,5 +15,7 @@ typedef struct {
 } ListaCircularDupla;
 
 ListaCircularDupla* criarLista();
+void destruirLista(ListaCircularDupla* lista);
+
 
 #endif
