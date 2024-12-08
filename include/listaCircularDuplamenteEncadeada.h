@@ -17,5 +17,6 @@ typedef struct {
 ListaCircularDupla* criarLista();
 void destruirLista(ListaCircularDupla* lista);
 bool inserirInicio(ListaCircularDupla* lista, const char* nome);
+bool inserirFim(ListaCircularDupla* lista, const char* nome);
 
 #endif
