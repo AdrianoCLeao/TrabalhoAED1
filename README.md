@@ -5,6 +5,7 @@
 Nem toda a estrutura foi implementada ainda, mas a intenção é que ao fim do trabalho o projeto se pareça com isto:
 
 - `bin/`: Arquivos binários resultantes da compilação do projeto.
+- `env/`: Diretório de ambiente para rodar o notebook python.
 - `include/`: Contém os arquivos de cabeçalho do projeto.
   - `include/data-structures/`
   - `include/algorithms/`
@@ -12,9 +13,13 @@ Nem toda a estrutura foi implementada ainda, mas a intenção é que ao fim do t
   - `src/data-structures/`
   - `src/algorithms/`
   - `src/main.c`
-- `test/`: Arquivos de testes automatizados, caso o nosso QA (Antônio) faça os testes bem feitos.
+- `stats/`: Arquivos para análise dos dados dos algoritmos
+  - `stats/analysis.ipynb`
+  - `stats/selection_sort.txt`
+  - `stats/heap_sort.txt`
 - `Makefile`: Arquivo com alguns scripts pra automatizar a compilação e execução do código.
-- `.gitignore`: Espero não ter que explicar pra marmanjo o que é um gitignore.
+- `.gitignore`: Arquivos binários que devem ser ignorados pelo Git.
+- `requirements.txt`: Dependencias python do projeto.
 
 ## Instalação
 
@@ -22,6 +27,7 @@ Nem toda a estrutura foi implementada ainda, mas a intenção é que ao fim do t
 
 ```bash
 git clone https://github.com/AdrianoCLeao/TrabalhoAED1.git
+cd TrabalhoAED1
 ```
 
 2. **Compilar o código**
@@ -39,3 +45,4 @@ Agora, ainda usando o Makefile, vamos rodar o executavél criado na compilação
 ```bash
 make run
 ```
+
