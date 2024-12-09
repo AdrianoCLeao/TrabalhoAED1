@@ -40,6 +40,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(VENV_DIR):
 	$(PYTHON) -m venv $(VENV_DIR)
+	$(VENV_ACTIVATE)
 	$(PIP) install --upgrade pip
 	$(PIP) install -r requirements.txt
 

@@ -12,6 +12,7 @@ double calcularTempo(clock_t inicio, clock_t fim) {
 
 void registrarDados(const char* algoritmo, double tempoExecucao, int quantidadeTrocas) {
     struct stat st = {0};
+
     if (stat("stats", &st) == -1) {
         if (mkdir("stats", 0777) != 0) {
             perror("Erro ao criar diretório stats");
@@ -22,15 +23,16 @@ void registrarDados(const char* algoritmo, double tempoExecucao, int quantidadeT
     char caminhoArquivo[256];
     snprintf(caminhoArquivo, sizeof(caminhoArquivo), "stats/%s.txt", algoritmo);
 
-    FILE* arquivo = fopen(caminhoArquivo, "a");
+    FILE* arquivo = fopen(caminhoArquivo, "w");
     if (!arquivo) {
         perror("Erro ao abrir o arquivo de registro");
         return;
     }
 
     fprintf(arquivo, "Algoritmo: %s\n", algoritmo);
-    fprintf(arquivo, "Tempo de execução: %.6f segundos\n", tempoExecucao);
+    fprintf(arquivo, "Tempo de execução: %.10f segundos\n", tempoExecucao);
     fprintf(arquivo, "Quantidade de trocas: %d\n\n", quantidadeTrocas);
 
     fclose(arquivo);
 }
+

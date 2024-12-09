@@ -85,12 +85,12 @@ int main() {
     inserirInicio(lista, "Rodrigo");
     inserirInicio(lista, "Elaisa");
 
-    printf("Lista antes da ordenação:\n");
+    printf("Lista antes da ordenacao:\n");
     exibirLista(lista);
 
     selectionSort(lista);
 
-    printf("Lista após a ordenação:\n");
+    printf("Lista apos a ordenacao:\n");
     exibirLista(lista);
 
     destruirLista(lista);
