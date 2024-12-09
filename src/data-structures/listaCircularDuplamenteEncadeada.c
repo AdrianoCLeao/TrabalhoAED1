@@ -1,6 +1,7 @@
 #include "../include/data-structures/listaCircularDuplamenteEncadeada.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* 
     Comentários para ajudar a lésbica:
