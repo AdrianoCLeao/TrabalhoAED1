@@ -8,47 +8,50 @@ SRCS := $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
 TARGET := $(BUILD_DIR)/main.exe
 
-PYTHON := $(shell command -v python3 || command -v python)
-
-VENV_DIR = env
-PIP = $(VENV_DIR)/bin/pip
-NOTEBOOK = stats/analysis.ipynb
-
-MKDIR_P = mkdir -p
-
 ifeq ($(OS),Windows_NT)
-    RMDIR = rmdir /s /q $(BUILD_DIR)
+    PYTHON := python
+    MKDIR_P = if not exist "$(subst /,\,$(strip $(1)))" mkdir "$(subst /,\,$(strip $(1)))"
+    RMDIR = rmdir /s /q
     EXECUTABLE = $(TARGET)
     VENV_ACTIVATE = $(VENV_DIR)\Scripts\activate
     VENV_PYTHON = $(VENV_DIR)\Scripts\python.exe
 else
-    RMDIR = rm -rf $(BUILD_DIR)
+    PYTHON := $(shell command -v python3 || command -v python)
+    MKDIR_P = mkdir -p $(1)
+    RMDIR = rm -rf
     EXECUTABLE = ./$(TARGET)
     VENV_ACTIVATE = source $(VENV_DIR)/bin/activate
     VENV_PYTHON = $(VENV_DIR)/bin/python
 endif
 
-all: $(TARGET)
+VENV_DIR = env
+PIP = $(VENV_PYTHON) -m pip
+NOTEBOOK = stats/analysis.ipynb
+
+all: $(TARGET) $(VENV_DIR)
 
 $(TARGET): $(OBJS)
-	$(MKDIR_P) $(BUILD_DIR)
+	$(call MKDIR_P, $(BUILD_DIR))
 	$(CC) $(CFLAGS) -o $@ $^
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	$(MKDIR_P) $(dir $@)
+	$(call MKDIR_P, $(dir $@))
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(VENV_DIR):
 	$(PYTHON) -m venv $(VENV_DIR)
-	$(VENV_PYTHON) -m pip install --upgrade pip
-	$(VENV_PYTHON) -m pip install -r requirements.txt
+	$(PIP) install --upgrade pip
+	$(PIP) install -r requirements.txt
+
+install-deps: $(VENV_DIR)
+	$(PIP) install -r requirements.txt
 
 clean:
-	$(RMDIR)
+	$(RMDIR) $(BUILD_DIR)
 	$(RMDIR) $(VENV_DIR)
 
-run: all $(VENV_DIR)
+run: $(TARGET)
 	$(EXECUTABLE)
 	$(VENV_PYTHON) -m notebook $(NOTEBOOK)
 
-.PHONY: all clean run
+.PHONY: all clean run install-deps

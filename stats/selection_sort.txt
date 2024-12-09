@@ -1,12 +1,8 @@
 Algoritmo: selection_sort
-Tempo de execução: 0.000007 segundos
-Quantidade de trocas: 1
+Tempo de execução: 0.000000 segundos
+Quantidade de trocas: 77
 
 Algoritmo: selection_sort
-Tempo de execução: 0.000003 segundos
-Quantidade de trocas: 1
-
-Algoritmo: selection_sort
-Tempo de execução: 0.000001 segundos
-Quantidade de trocas: 1
+Tempo de execução: 0.000000 segundos
+Quantidade de trocas: 77
 
