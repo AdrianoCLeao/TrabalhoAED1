@@ -138,6 +138,14 @@ bool removerFim(ListaCircularDupla* lista) {
     return true;
 }
 
+No* obterNoPorIndice(ListaCircularDupla* lista, int indice) {
+    No* atual = lista->inicio;
+    for (int i = 0; i < indice; i++) {
+        atual = atual->proximo;
+    }
+    return atual;
+}
+
 void exibirLista(ListaCircularDupla* lista) {
     if (!lista || lista->tamanho == 0) {
         printf("Lista vazia.\n");
