@@ -6,8 +6,27 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
-double calcularTempo(clock_t inicio, clock_t fim) {
-    return ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#else
+#include <sys/time.h>
+#endif
+
+double obterTempoAtual() {
+#if defined(_WIN32) || defined(_WIN64)
+    LARGE_INTEGER freq, counter;
+    QueryPerformanceFrequency(&freq);
+    QueryPerformanceCounter(&counter);
+    return (double)counter.QuadPart / (double)freq.QuadPart;
+#else
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts); 
+    return (double)ts.tv_sec + (double)ts.tv_nsec / 1e9;
+#endif
+}
+
+double calcularTempo(double inicio, double fim) {
+    return fim - inicio;
 }
 
 void registrarDados(const char* algoritmo, double tempoExecucao, int quantidadeTrocas) {

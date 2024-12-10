@@ -3,7 +3,8 @@
 
 #include <time.h>
 
-double calcularTempo(clock_t inicio, clock_t fim);
+double obterTempoAtual();
+double calcularTempo(double inicio, double fim);
 void registrarDados(const char* algoritmo, double tempoExecucao, int quantidadeTrocas);
 
 #endif

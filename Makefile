@@ -13,7 +13,7 @@ ifeq ($(OS),Windows_NT)
     MKDIR_P = if not exist "$(subst /,\,$(strip $(1)))" mkdir "$(subst /,\,$(strip $(1)))"
     RMDIR = rmdir /s /q
     EXECUTABLE = $(TARGET)
-    VENV_ACTIVATE = $(VENV_DIR)\Scripts\activate
+    VENV_ACTIVATE = .\$(VENV_DIR)\Scripts\activate
     VENV_PYTHON = $(VENV_DIR)\Scripts\python.exe
 else
     PYTHON := $(shell command -v python3 || command -v python)

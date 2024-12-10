@@ -7,7 +7,7 @@
 void selectionSort(ListaCircularDupla* lista) {
     if (!lista || lista->tamanho < 2) return;
 
-    clock_t inicio = clock();
+    double inicio = obterTempoAtual();
     int quantidadeTrocas = 0;
 
     No* atual = lista->inicio;
@@ -31,7 +31,7 @@ void selectionSort(ListaCircularDupla* lista) {
         atual = atual->proximo;
     } while (atual != lista->inicio);
 
-    clock_t fim = clock();
+    double fim = obterTempoAtual();
     double tempoExecucao = calcularTempo(inicio, fim);
     registrarDados("selection_sort", tempoExecucao, quantidadeTrocas);
 }
