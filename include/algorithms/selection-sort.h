@@ -3,6 +3,8 @@
 
 #include "../include/data-structures/listaCircularDuplamenteEncadeada.h"
 
+void selectionSortVetorNumeros(int* vetor, int tamanho);
+
 void selectionSort(ListaCircularDupla* lista);
 
 #endif

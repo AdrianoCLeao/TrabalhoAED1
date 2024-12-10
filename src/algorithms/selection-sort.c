@@ -4,6 +4,26 @@
 #include <string.h>
 #include <time.h>
 
+void selectionSortVetorNumeros(int* vetor, int tamanho) {
+    if (!vetor || tamanho < 2) return;
+    
+    for (int i = 0;  i < tamanho - 1; i++) {
+        int menor = i;
+
+        for (int j = i + 1; j < tamanho; j++) {
+            if (vetor[j] < vetor[menor]) {
+                menor = j;
+            }
+        }
+
+        if (menor != i) {
+            int temp = vetor[i];
+            vetor[i] = vetor[menor];
+            vetor[menor] = temp;
+        }
+    }
+}
+
 void selectionSort(ListaCircularDupla* lista) {
     if (!lista || lista->tamanho < 2) return;
 
