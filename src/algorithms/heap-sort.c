@@ -37,3 +37,41 @@ void heapSortVetorNumeros(int* vetor, int tamanho) {
         criaHeapVetorNumeros(vetor, 0, i);
     }
 }
+
+void criaHeapVetorCaracteres(char** vetor, int inicio, int fim) {
+    int maior = inicio;
+    int esquerda = 2 * inicio + 1;
+    int direita = 2 * inicio + 2;
+
+    if (esquerda < fim && strcmp(vetor[esquerda], vetor[maior]) > 0) {
+        maior = esquerda;
+    }
+
+    if (direita < fim && strcmp(vetor[direita], vetor[maior]) > 0) {
+        maior = direita;
+    }
+
+    if (maior != inicio) {
+        char* temp = vetor[inicio];
+        vetor[inicio] = vetor[maior];
+        vetor[maior] = temp;
+
+        criaHeapVetorCaracteres(vetor, maior, fim);
+    }
+}
+
+void heapSortVetorCaracteres(char** vetor, int tamanho) {
+    if (!vetor || tamanho < 2) return;
+
+    for (int i = tamanho / 2 - 1; i >= 0; i--) {
+        criaHeapVetorCaracteres(vetor, i, tamanho);
+    }
+
+    for (int i = tamanho - 1; i > 0; i--) {
+        char* temp = vetor[0];
+        vetor[0] = vetor[i];
+        vetor[i] = temp;
+
+        criaHeapVetorCaracteres(vetor, 0, i);
+    }
+}
