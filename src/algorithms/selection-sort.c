@@ -24,6 +24,26 @@ void selectionSortVetorNumeros(int* vetor, int tamanho) {
     }
 }
 
+void selectionSortVetorCaracteres(char** vetor, int tamanho) {
+    if (!vetor || tamanho < 2) return;
+
+    for (int i = 0; i < tamanho - 1; i++) {
+        int menor = i;
+
+        for (int j = i + 1; j < tamanho; j++) {
+            if (strcmp(vetor[j], vetor[menor]) < 0) {
+                menor = j;
+            }
+        }
+
+        if (menor != i) {
+            char* temp = vetor[i];
+            vetor[i] = vetor[menor];
+            vetor[menor] = temp;
+        }
+    }
+}
+
 void selectionSort(ListaCircularDupla* lista) {
     if (!lista || lista->tamanho < 2) return;
 

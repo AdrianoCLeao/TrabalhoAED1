@@ -4,6 +4,7 @@
 #include "../include/data-structures/listaCircularDuplamenteEncadeada.h"
 
 void selectionSortVetorNumeros(int* vetor, int tamanho);
+void selectionSortVetorCaracteres(char** vetor, int tamanho);
 
 void selectionSort(ListaCircularDupla* lista);
 
