@@ -25,13 +25,14 @@ void criaHeapVetorNumeros(int* vetor, int inicio, int fim) {
 }
 
 void heapSortVetorNumeros(int* vetor, int tamanho) {
+    int i;
     if (!vetor || tamanho < 2) return;
 
-    for (int i = tamanho / 2 - 1; i >= 0; i--) {
+    for (i = tamanho / 2 - 1; i >= 0; i--) {
         criaHeapVetorNumeros(vetor, i, tamanho);
     }
 
-    for (int i = tamanho - 1; i > 0; i--) {
+    for (i = tamanho - 1; i > 0; i--) {
         int temp = vetor[0];
         vetor[0] = vetor[i];
         vetor[i] = temp;
@@ -63,13 +64,15 @@ void criaHeapVetorCaracteres(char** vetor, int inicio, int fim) {
 }
 
 void heapSortVetorCaracteres(char** vetor, int tamanho) {
+    int i;
+
     if (!vetor || tamanho < 2) return;
 
-    for (int i = tamanho / 2 - 1; i >= 0; i--) {
+    for (i = tamanho / 2 - 1; i >= 0; i--) {
         criaHeapVetorCaracteres(vetor, i, tamanho);
     }
 
-    for (int i = tamanho - 1; i > 0; i--) {
+    for (i = tamanho - 1; i > 0; i--) {
         char* temp = vetor[0];
         vetor[0] = vetor[i];
         vetor[i] = temp;
@@ -109,15 +112,17 @@ void criaHeapListaCaracteres(ListaCircularDupla* lista, int inicio, int tamanho)
 }
 
 void heapSortListaCaracteres(ListaCircularDupla* lista) {
+    int i;
+    
     if (!lista || lista->tamanho < 2) return;
 
     int tamanho = lista->tamanho;
 
-    for (int i = tamanho / 2 - 1; i >= 0; i--) {
+    for (i = tamanho / 2 - 1; i >= 0; i--) {
         criaHeapListaCaracteres(lista, i, tamanho);
     }
 
-    for (int i = tamanho - 1; i > 0; i--) {
+    for (i = tamanho - 1; i > 0; i--) {
         No* noInicio = obterNoPorIndice(lista, 0);
         No* noFinal = obterNoPorIndice(lista, i);
 

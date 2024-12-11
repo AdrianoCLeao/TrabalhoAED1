@@ -139,8 +139,9 @@ bool removerFim(ListaCircularDupla* lista) {
 }
 
 No* obterNoPorIndice(ListaCircularDupla* lista, int indice) {
+    int i;
     No* atual = lista->inicio;
-    for (int i = 0; i < indice; i++) {
+    for (i = 0; i < indice; i++) {
         atual = atual->proximo;
     }
     return atual;
