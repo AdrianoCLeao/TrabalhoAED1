@@ -4,8 +4,6 @@
 #include <string.h>
 
 /* 
-    Comentários para ajudar a lésbica:
-
     - Essa implementação é da lista circular duplamente encadeada. 
       A lista é formada por "nós", que armazenam uma string e apontam para o próximo e o anterior.
     
