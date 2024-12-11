@@ -68,6 +68,9 @@ void heapSortVetorCaracteres(char** vetor, int tamanho) {
 
     if (!vetor || tamanho < 2) return;
 
+    double inicio = obterTempoAtual();
+    int quantidadeTrocas = 0;
+
     for (i = tamanho / 2 - 1; i >= 0; i--) {
         criaHeapVetorCaracteres(vetor, i, tamanho);
     }
@@ -76,9 +79,15 @@ void heapSortVetorCaracteres(char** vetor, int tamanho) {
         char* temp = vetor[0];
         vetor[0] = vetor[i];
         vetor[i] = temp;
+        quantidadeTrocas++;
 
         criaHeapVetorCaracteres(vetor, 0, i);
     }
+
+    double fim = obterTempoAtual();
+    double tempoExecucao = calcularTempo(inicio, fim);
+
+    registrarDados("heap_sort_vetor", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
 void criaHeapListaCaracteres(ListaCircularDupla* lista, int inicio, int tamanho) {
@@ -116,6 +125,9 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
     
     if (!lista || lista->tamanho < 2) return;
 
+    double inicio = obterTempoAtual();
+    int quantidadeTrocas = 0;
+
     int tamanho = lista->tamanho;
 
     for (i = tamanho / 2 - 1; i >= 0; i--) {
@@ -129,7 +141,13 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
         char* temp = noInicio->nome;
         noInicio->nome = noFinal->nome;
         noFinal->nome = temp;
+        quantidadeTrocas++;
 
         criaHeapListaCaracteres(lista, 0, i);
     }
+
+    double fim = obterTempoAtual();
+    double tempoExecucao = calcularTempo(inicio, fim);
+
+    registrarDados("heap_sort_lista", lista->tamanho, tempoExecucao, quantidadeTrocas);
 }
