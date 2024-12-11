@@ -8,7 +8,6 @@ void heapSortVetorNumeros(int* vetor, int tamanho);
 void criaHeapVetorCaracteres(char** vetor, int inicio, int fim);
 void heapSortVetorCaracteres(char** vetor, int tamanho);
 
-void criaHeapListaCaracteres(ListaCircularDupla* lista, int inicio, int tamanho);
 void heapSortListaCaracteres(ListaCircularDupla* lista);
 
 #endif
