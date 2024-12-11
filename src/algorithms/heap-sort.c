@@ -106,7 +106,7 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
 
     No* atual = lista->inicio;
     for (i = 0; i < tamanho; i++) {
-        vetor[i] = atual->nome;
+        vetor[i] = atual->dado;
         atual = atual->proximo;
     }
 
@@ -125,7 +125,7 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
 
     atual = lista->inicio;
     for (i = 0; i < tamanho; i++) {
-        atual->nome = vetor[i];
+        atual->dado = vetor[i];
         atual = atual->proximo;
     }
 

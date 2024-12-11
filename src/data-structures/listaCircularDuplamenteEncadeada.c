@@ -31,14 +31,16 @@
     7. **exibirLista**: Mostra todos os elementos da lista na ordem, começando do início. 
        Dá um "loop" nos elementos e imprime os valores. Se não tem nada na lista, diz que tá vazia.
 */
-ListaCircularDupla* criarLista() {
+ListaCircularDupla* criarLista(TipoDado tipo) {
     ListaCircularDupla* lista = (ListaCircularDupla*) malloc(sizeof(ListaCircularDupla));
     if (lista) {
         lista->inicio = NULL;
         lista->tamanho = 0;
+        lista->tipo = tipo;
     }
     return lista;
 }
+
 
 void destruirLista(ListaCircularDupla* lista) {
     if (lista) {
@@ -49,16 +51,25 @@ void destruirLista(ListaCircularDupla* lista) {
     }
 }
 
-bool inserirInicio(ListaCircularDupla* lista, const char* nome) {
+bool inserirInicio(ListaCircularDupla* lista, void* dado) {
     if (!lista) return false;
 
     No* novoNo = (No*) malloc(sizeof(No));
     if (!novoNo) return false;
 
-    novoNo->nome = strdup(nome); 
-    if (!novoNo->nome) {
-        free(novoNo);
-        return false;
+    if (lista->tipo == TIPO_STRING) {
+        novoNo->dado = strdup((char*) dado);
+        if (!novoNo->dado) {
+            free(novoNo);
+            return false;
+        }
+    } else if (lista->tipo == TIPO_INT) {
+        novoNo->dado = malloc(sizeof(int));
+        if (!novoNo->dado) {
+            free(novoNo);
+            return false;
+        }
+        *(int*)novoNo->dado = *(int*)dado;
     }
 
     if (lista->tamanho == 0) {
@@ -76,19 +87,29 @@ bool inserirInicio(ListaCircularDupla* lista, const char* nome) {
     return true;
 }
 
-bool inserirFim(ListaCircularDupla* lista, const char* nome) {
+bool inserirFim(ListaCircularDupla* lista, void* dado) {
     if (!lista) return false;
+
     if (lista->tamanho == 0) {
-        return inserirInicio(lista, nome);
+        return inserirInicio(lista, dado);
     }
 
     No* novoNo = (No*) malloc(sizeof(No));
     if (!novoNo) return false;
 
-    novoNo->nome = strdup(nome);
-    if (!novoNo->nome) {
-        free(novoNo);
-        return false;
+    if (lista->tipo == TIPO_STRING) {
+        novoNo->dado = strdup((char*) dado);
+        if (!novoNo->dado) {
+            free(novoNo);
+            return false;
+        }
+    } else if (lista->tipo == TIPO_INT) {
+        novoNo->dado = malloc(sizeof(int));
+        if (!novoNo->dado) {
+            free(novoNo);
+            return false;
+        }
+        *(int*)novoNo->dado = *(int*)dado;
     }
 
     No* ultimo = lista->inicio->anterior;
@@ -113,7 +134,13 @@ bool removerInicio(ListaCircularDupla* lista) {
         lista->inicio->anterior = ultimo;
         ultimo->proximo = lista->inicio;
     }
-    free(removido->nome);
+
+    if (lista->tipo == TIPO_STRING) {
+        free(removido->dado);
+    } else if (lista->tipo == TIPO_INT) {
+        free(removido->dado);
+    }
+
     free(removido);
     lista->tamanho--;
     return true;
@@ -131,9 +158,13 @@ bool removerFim(ListaCircularDupla* lista) {
     penultimo->proximo = lista->inicio;
     lista->inicio->anterior = penultimo;
 
-    free(ultimo->nome);
-    free(ultimo);
+    if (lista->tipo == TIPO_STRING) {
+        free(ultimo->dado);
+    } else if (lista->tipo == TIPO_INT) {
+        free(ultimo->dado);
+    }
 
+    free(ultimo);
     lista->tamanho--;
     return true;
 }
@@ -156,7 +187,11 @@ void exibirLista(ListaCircularDupla* lista) {
     No* atual = lista->inicio;
     printf("Elementos da lista: ");
     do {
-        printf("%s ", atual->nome);
+        if (lista->tipo == TIPO_STRING) {
+            printf("%s ", (char*) atual->dado);
+        } else if (lista->tipo == TIPO_INT) {
+            printf("%d ", *(int*) atual->dado);
+        }
         atual = atual->proximo;
     } while (atual != lista->inicio);
     printf("\n");

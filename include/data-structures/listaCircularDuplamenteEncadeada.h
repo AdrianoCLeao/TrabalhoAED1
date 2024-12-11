@@ -3,24 +3,29 @@
 
 #include <stdbool.h>
 
+typedef enum {
+    TIPO_STRING,
+    TIPO_INT
+} TipoDado;
+
 typedef struct No {
-    char* nome; 
+    void* dado;
     struct No* proximo;
     struct No* anterior;
 } No;
 
 typedef struct {
-    No* inicio; 
+    No* inicio;
     int tamanho;
+    TipoDado tipo;
 } ListaCircularDupla;
 
-ListaCircularDupla* criarLista();
+ListaCircularDupla* criarLista(TipoDado tipo);
 void destruirLista(ListaCircularDupla* lista);
-bool inserirInicio(ListaCircularDupla* lista, const char* nome);
-bool inserirFim(ListaCircularDupla* lista, const char* nome);
+bool inserirInicio(ListaCircularDupla* lista, void* dado);
+bool inserirFim(ListaCircularDupla* lista, void* dado);
 bool removerInicio(ListaCircularDupla* lista);
 bool removerFim(ListaCircularDupla* lista);
-No* obterNoPorIndice(ListaCircularDupla* lista, int indice);
 void exibirLista(ListaCircularDupla* lista);
 
 #endif

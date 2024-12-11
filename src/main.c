@@ -17,8 +17,8 @@ void construirCaminho(char* basePath, const char* relativePath, char* result) {
 }
 
 int main() {
-    ListaCircularDupla* listaSelection = criarLista();
-    ListaCircularDupla* listaHeap = criarLista();
+    ListaCircularDupla* listaSelection = criarLista(TIPO_STRING);
+    ListaCircularDupla* listaHeap = criarLista(TIPO_STRING);
 
     char basePath[1024];
     char filePath[1024];
@@ -67,7 +67,7 @@ int main() {
 
     No* atual = listaSelection->inicio;
     do {
-        fprintf(sortedFileSelection, "%s\n", atual->nome);
+        fprintf(sortedFileSelection, "%s\n", (char*) atual->dado);
         atual = atual->proximo;
     } while (atual != listaSelection->inicio);
 
@@ -85,7 +85,7 @@ int main() {
 
     atual = listaHeap->inicio;
     do {
-        fprintf(sortedFileHeap, "%s\n", atual->nome);
+        fprintf(sortedFileHeap, "%s\n", (char*) atual->dado);
         atual = atual->proximo;
     } while (atual != listaHeap->inicio);
 

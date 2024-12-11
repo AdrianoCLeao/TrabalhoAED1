@@ -75,16 +75,16 @@ void selectionSort(ListaCircularDupla* lista) {
         No* menor = atual;
         No* proximo = atual->proximo;
         while (proximo != lista->inicio) {
-            if (strcmp(proximo->nome, menor->nome) < 0) {
+            if (strcmp(proximo->dado, menor->dado) < 0) {
                 menor = proximo;
             }
             proximo = proximo->proximo;
         }
 
         if (menor != atual) {
-            char* temp = atual->nome;
-            atual->nome = menor->nome;
-            menor->nome = temp;
+            char* temp = atual->dado;
+            atual->dado = menor->dado;
+            menor->dado = temp;
             quantidadeTrocas++;
         }
 
