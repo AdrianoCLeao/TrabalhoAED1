@@ -64,7 +64,7 @@ void selectionSortVetorCaracteres(char** vetor, int tamanho) {
     registrarDados("selection_sort_caracteres", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
-void selectionSort(ListaCircularDupla* lista) {
+void selectionSortListaCaracteres(ListaCircularDupla* lista) {
     if (!lista || lista->tamanho < 2) return;
 
     double inicio = obterTempoAtual();
@@ -97,3 +97,26 @@ void selectionSort(ListaCircularDupla* lista) {
     registrarDados("selection_sort", lista->tamanho, tempoExecucao, quantidadeTrocas);
 }
 
+void selectionSortListaNumeros(ListaCircularDupla* lista) {
+    if (!lista || lista->tamanho < 2) return;
+
+    No* atual = lista->inicio;
+    do {
+        No* menor = atual;
+        No* proximo = atual->proximo;
+        while (proximo != lista->inicio) {
+            if (*(int*)proximo->dado < *(int*)menor->dado) {
+                menor = proximo;
+            }
+            proximo = proximo->proximo;
+        }
+
+        if (menor != atual) {
+            int temp = *(int*)atual->dado;
+            *(int*)atual->dado = *(int*)menor->dado;
+            *(int*)menor->dado = temp;
+        }
+
+        atual = atual->proximo;
+    } while (atual != lista->inicio);
+}
