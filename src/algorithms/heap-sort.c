@@ -1,6 +1,8 @@
 #include "../include/algorithms/heap-sort.h"
 #include "../include/data-structures/listaCircularDuplamenteEncadeada.h"
+#include "../include/utils/utils.h"
 #include <string.h>
+#include <stdlib.h>
 
 void criaHeapVetorNumeros(int* vetor, int inicio, int fim) {
     int maior = inicio;
@@ -90,61 +92,44 @@ void heapSortVetorCaracteres(char** vetor, int tamanho) {
     registrarDados("heap_sort_vetor", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
-void criaHeapListaCaracteres(ListaCircularDupla* lista, int inicio, int tamanho) {
-    int maior = inicio;
-    int esquerda = 2 * inicio + 1;
-    int direita = 2 * inicio + 2;
-
-    No* noMaior = obterNoPorIndice(lista, maior);
-    No* noEsquerda = (esquerda < tamanho) ? obterNoPorIndice(lista, esquerda) : NULL;
-    No* noDireita = (direita < tamanho) ? obterNoPorIndice(lista, direita) : NULL;
-
-    if (noEsquerda && strcmp(noEsquerda->nome, noMaior->nome) > 0) {
-        maior = esquerda;
-        noMaior = noEsquerda;
-    }
-
-    if (noDireita && strcmp(noDireita->nome, noMaior->nome) > 0) {
-        maior = direita;
-        noMaior = noDireita;
-    }
-
-    if (maior != inicio) {
-        No* noAtual = obterNoPorIndice(lista, inicio);
-
-        char* temp = noAtual->nome;
-        noAtual->nome = noMaior->nome;
-        noMaior->nome = temp;
-
-        criaHeapListaCaracteres(lista, maior, tamanho);
-    }
-}
-
 void heapSortListaCaracteres(ListaCircularDupla* lista) {
     int i;
-    
+
     if (!lista || lista->tamanho < 2) return;
 
     double inicio = obterTempoAtual();
     int quantidadeTrocas = 0;
-
     int tamanho = lista->tamanho;
 
+    char** vetor = (char**) malloc(tamanho * sizeof(char*));
+    if (!vetor) return;
+
+    No* atual = lista->inicio;
+    for (i = 0; i < tamanho; i++) {
+        vetor[i] = atual->nome;
+        atual = atual->proximo;
+    }
+
     for (i = tamanho / 2 - 1; i >= 0; i--) {
-        criaHeapListaCaracteres(lista, i, tamanho);
+        criaHeapVetorCaracteres(vetor, i, tamanho);
     }
 
     for (i = tamanho - 1; i > 0; i--) {
-        No* noInicio = obterNoPorIndice(lista, 0);
-        No* noFinal = obterNoPorIndice(lista, i);
-
-        char* temp = noInicio->nome;
-        noInicio->nome = noFinal->nome;
-        noFinal->nome = temp;
+        char* temp = vetor[0];
+        vetor[0] = vetor[i];
+        vetor[i] = temp;
         quantidadeTrocas++;
 
-        criaHeapListaCaracteres(lista, 0, i);
+        criaHeapVetorCaracteres(vetor, 0, i);
     }
+
+    atual = lista->inicio;
+    for (i = 0; i < tamanho; i++) {
+        atual->nome = vetor[i];
+        atual = atual->proximo;
+    }
+
+    free(vetor);
 
     double fim = obterTempoAtual();
     double tempoExecucao = calcularTempo(inicio, fim);
