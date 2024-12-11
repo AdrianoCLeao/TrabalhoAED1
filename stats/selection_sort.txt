@@ -1,4 +1,0 @@
-Algoritmo: selection_sort
-Tempo de execução: 0.0000119000 segundos
-Quantidade de trocas: 77
-

@@ -29,7 +29,7 @@ double calcularTempo(double inicio, double fim) {
     return fim - inicio;
 }
 
-void registrarDados(const char* algoritmo, double tempoExecucao, int quantidadeTrocas) {
+void registrarDados(const char* algoritmo, int tamanhoEntrada, double tempoExecucao, int quantidadeTrocas) {
     struct stat st = {0};
 
     if (stat("stats", &st) == -1) {
@@ -40,17 +40,19 @@ void registrarDados(const char* algoritmo, double tempoExecucao, int quantidadeT
     }
 
     char caminhoArquivo[256];
-    snprintf(caminhoArquivo, sizeof(caminhoArquivo), "stats/%s.txt", algoritmo);
+    snprintf(caminhoArquivo, sizeof(caminhoArquivo), "stats/%s.csv", algoritmo);
 
-    FILE* arquivo = fopen(caminhoArquivo, "w");
+    FILE* arquivo = fopen(caminhoArquivo, "a");
     if (!arquivo) {
         perror("Erro ao abrir o arquivo de registro");
         return;
     }
 
-    fprintf(arquivo, "Algoritmo: %s\n", algoritmo);
-    fprintf(arquivo, "Tempo de execução: %.10f segundos\n", tempoExecucao);
-    fprintf(arquivo, "Quantidade de trocas: %d\n\n", quantidadeTrocas);
+    if (ftell(arquivo) == 0) {
+        fprintf(arquivo, "TamanhoEntrada,TempoExecucao,QuantidadeTrocas\n");
+    }
+
+    fprintf(arquivo, "%d,%.10f,%d\n", tamanhoEntrada, tempoExecucao, quantidadeTrocas);
 
     fclose(arquivo);
 }

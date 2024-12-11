@@ -7,8 +7,11 @@
 void selectionSortVetorNumeros(int* vetor, int tamanho) {
     int i, j;
     if (!vetor || tamanho < 2) return;
-    
-    for (i = 0;  i < tamanho - 1; i++) {
+
+    double inicio = obterTempoAtual();
+    int quantidadeTrocas = 0;
+
+    for (i = 0; i < tamanho - 1; i++) {
         int menor = i;
 
         for (j = i + 1; j < tamanho; j++) {
@@ -21,13 +24,22 @@ void selectionSortVetorNumeros(int* vetor, int tamanho) {
             int temp = vetor[i];
             vetor[i] = vetor[menor];
             vetor[menor] = temp;
+            quantidadeTrocas++;
         }
     }
+
+    double fim = obterTempoAtual();
+    double tempoExecucao = calcularTempo(inicio, fim);
+
+    registrarDados("selection_sort_numeros", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
 void selectionSortVetorCaracteres(char** vetor, int tamanho) {
     int i, j;
     if (!vetor || tamanho < 2) return;
+
+    double inicio = obterTempoAtual();
+    int quantidadeTrocas = 0;
 
     for (i = 0; i < tamanho - 1; i++) {
         int menor = i;
@@ -42,8 +54,14 @@ void selectionSortVetorCaracteres(char** vetor, int tamanho) {
             char* temp = vetor[i];
             vetor[i] = vetor[menor];
             vetor[menor] = temp;
+            quantidadeTrocas++;
         }
     }
+
+    double fim = obterTempoAtual();
+    double tempoExecucao = calcularTempo(inicio, fim);
+
+    registrarDados("selection_sort_caracteres", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
 void selectionSort(ListaCircularDupla* lista) {
@@ -75,6 +93,7 @@ void selectionSort(ListaCircularDupla* lista) {
 
     double fim = obterTempoAtual();
     double tempoExecucao = calcularTempo(inicio, fim);
-    registrarDados("selection_sort", tempoExecucao, quantidadeTrocas);
+
+    registrarDados("selection_sort", lista->tamanho, tempoExecucao, quantidadeTrocas);
 }
 
