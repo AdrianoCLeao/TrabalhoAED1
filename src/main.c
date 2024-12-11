@@ -16,11 +16,13 @@ void construirCaminho(char* basePath, const char* relativePath, char* result) {
 }
 
 int main() {
-    ListaCircularDupla* lista = criarLista();
+    ListaCircularDupla* listaSelection = criarLista();
+    ListaCircularDupla* listaHeap = criarLista();
 
     char basePath[1024];
     char filePath[1024];
-    char sortedFilePath[1024];
+    char sortedFilePathSelection[1024];
+    char sortedFilePathHeap[1024];
 
     if (getcwd(basePath, sizeof(basePath)) == NULL) {
         perror("Erro ao obter o diretório atual");
@@ -28,7 +30,8 @@ int main() {
     }
 
     construirCaminho(basePath, "data/nomes_aleatorios.txt", filePath);
-    construirCaminho(basePath, "data/nomes_ordenados.txt", sortedFilePath);
+    construirCaminho(basePath, "data/nomes_ordenados_selection.txt", sortedFilePathSelection);
+    construirCaminho(basePath, "data/nomes_ordenados_heap.txt", sortedFilePathHeap);
 
     printf("Tentando abrir o arquivo: %s\n", filePath);
 
@@ -45,31 +48,53 @@ int main() {
             *newline = '\0';
         }
 
-        inserirInicio(lista, nome);
+        inserirInicio(listaSelection, nome);
+        inserirInicio(listaHeap, nome);
     }
 
     fclose(file);
 
-    selectionSort(lista);
+    selectionSort(listaSelection);
 
-    printf("Lista apos a ordenacao (gravando em arquivo):\n");
-
-    FILE* sortedFile = fopen(sortedFilePath, "w");
-    if (sortedFile == NULL) {
-        perror("Erro ao criar o arquivo de lista ordenada");
-        destruirLista(lista);
+    FILE* sortedFileSelection = fopen(sortedFilePathSelection, "w");
+    if (sortedFileSelection == NULL) {
+        perror("Erro ao criar o arquivo de lista ordenada (Selection Sort)");
+        destruirLista(listaSelection);
+        destruirLista(listaHeap);
         return 1;
     }
 
-    No* atual = lista->inicio;
+    No* atual = listaSelection->inicio;
     do {
-        fprintf(sortedFile, "%s\n", atual->nome);
+        fprintf(sortedFileSelection, "%s\n", atual->nome);
         atual = atual->proximo;
-    } while (atual != lista->inicio);
+    } while (atual != listaSelection->inicio);
 
-    fclose(sortedFile);
-    printf("Lista ordenada gravada em: %s\n", sortedFilePath);
+    fclose(sortedFileSelection);
 
-    destruirLista(lista);
+    heapSortListaCaracteres(listaHeap);
+
+    FILE* sortedFileHeap = fopen(sortedFilePathHeap, "w");
+    if (sortedFileHeap == NULL) {
+        perror("Erro ao criar o arquivo de lista ordenada (Heap Sort)");
+        destruirLista(listaSelection);
+        destruirLista(listaHeap);
+        return 1;
+    }
+
+    atual = listaHeap->inicio;
+    do {
+        fprintf(sortedFileHeap, "%s\n", atual->nome);
+        atual = atual->proximo;
+    } while (atual != listaHeap->inicio);
+
+    fclose(sortedFileHeap);
+
+    printf("Listas ordenadas gravadas em:\n");
+    printf(" - %s (Selection Sort)\n", sortedFilePathSelection);
+    printf(" - %s (Heap Sort)\n", sortedFilePathHeap);
+
+    destruirLista(listaSelection);
+    destruirLista(listaHeap);
     return 0;
 }
