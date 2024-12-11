@@ -136,3 +136,37 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
 
     registrarDados("heap_sort_lista", lista->tamanho, tempoExecucao, quantidadeTrocas);
 }
+
+void heapSortListaNumeros(ListaCircularDupla* lista) {
+    if (!lista || lista->tamanho < 2) return;
+
+    int tamanho = lista->tamanho;
+    int* vetor = (int*) malloc(tamanho * sizeof(int));
+    if (!vetor) return;
+
+    No* atual = lista->inicio;
+    for (int i = 0; i < tamanho; i++) {
+        vetor[i] = *(int*) atual->dado;
+        atual = atual->proximo;
+    }
+
+    for (int i = tamanho / 2 - 1; i >= 0; i--) {
+        criaHeapVetorNumeros(vetor, i, tamanho);
+    }
+
+    for (int i = tamanho - 1; i > 0; i--) {
+        int temp = vetor[0];
+        vetor[0] = vetor[i];
+        vetor[i] = temp;
+
+        criaHeapVetorNumeros(vetor, 0, i);
+    }
+
+    atual = lista->inicio;
+    for (int i = 0; i < tamanho; i++) {
+        *(int*) atual->dado = vetor[i];
+        atual = atual->proximo;
+    }
+
+    free(vetor);
+}
