@@ -35,7 +35,7 @@ void selectionSortVetorNumeros(int* vetor, int tamanho, int crescente) {
 
     double fim = obterTempoAtual();
     double tempoExecucao = calcularTempo(inicio, fim);
-    registrarDados("selection_sort_vetor", tamanho, tempoExecucao, trocas);
+    registrarDados("selection_sort_vetor_numeros", tamanho, tempoExecucao, trocas);
 }
 
 void selectionSortVetorCaracteres(char** vetor, int tamanho, int crescente) {
