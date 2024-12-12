@@ -4,117 +4,116 @@
 #include <string.h>
 #include <time.h>
 
-void selectionSortVetorNumeros(int* vetor, int tamanho) {
+void selectionSortVetorNumeros(int* vetor, int tamanho, int crescente) {
     int i, j;
     if (!vetor || tamanho < 2) return;
 
-    double inicio = obterTempoAtual();
-    int quantidadeTrocas = 0;
-
     for (i = 0; i < tamanho - 1; i++) {
-        int menor = i;
+        int index = i;
 
         for (j = i + 1; j < tamanho; j++) {
-            if (vetor[j] < vetor[menor]) {
-                menor = j;
+            if (crescente) {
+                if (vetor[j] < vetor[index]) {
+                    index = j;
+                }
+            } else {
+                if (vetor[j] > vetor[index]) {
+                    index = j;
+                }
             }
         }
 
-        if (menor != i) {
+        if (index != i) {
             int temp = vetor[i];
-            vetor[i] = vetor[menor];
-            vetor[menor] = temp;
-            quantidadeTrocas++;
+            vetor[i] = vetor[index];
+            vetor[index] = temp;
         }
     }
-
-    double fim = obterTempoAtual();
-    double tempoExecucao = calcularTempo(inicio, fim);
-
-    registrarDados("selection_sort_numeros", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
-void selectionSortVetorCaracteres(char** vetor, int tamanho) {
+void selectionSortVetorCaracteres(char** vetor, int tamanho, int crescente) {
     int i, j;
     if (!vetor || tamanho < 2) return;
 
-    double inicio = obterTempoAtual();
-    int quantidadeTrocas = 0;
-
     for (i = 0; i < tamanho - 1; i++) {
-        int menor = i;
+        int index = i;
 
         for (j = i + 1; j < tamanho; j++) {
-            if (strcmp(vetor[j], vetor[menor]) < 0) {
-                menor = j;
+            if (crescente) {
+                if (strcmp(vetor[j], vetor[index]) < 0) {
+                    index = j;
+                }
+            } else {
+                if (strcmp(vetor[j], vetor[index]) > 0) {
+                    index = j;
+                }
             }
         }
 
-        if (menor != i) {
+        if (index != i) {
             char* temp = vetor[i];
-            vetor[i] = vetor[menor];
-            vetor[menor] = temp;
-            quantidadeTrocas++;
+            vetor[i] = vetor[index];
+            vetor[index] = temp;
         }
     }
-
-    double fim = obterTempoAtual();
-    double tempoExecucao = calcularTempo(inicio, fim);
-
-    registrarDados("selection_sort_caracteres", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
-void selectionSortListaCaracteres(ListaCircularDupla* lista) {
+void selectionSortListaCaracteres(ListaCircularDupla* lista, int crescente) {
     if (!lista || lista->tamanho < 2) return;
-
-    double inicio = obterTempoAtual();
-    int quantidadeTrocas = 0;
 
     No* atual = lista->inicio;
     do {
-        No* menor = atual;
+        No* extremum = atual;
         No* proximo = atual->proximo;
+
         while (proximo != lista->inicio) {
-            if (strcmp(proximo->dado, menor->dado) < 0) {
-                menor = proximo;
+            if (crescente) {
+                if (strcmp(proximo->dado, extremum->dado) < 0) {
+                    extremum = proximo;
+                }
+            } else {
+                if (strcmp(proximo->dado, extremum->dado) > 0) {
+                    extremum = proximo;
+                }
             }
             proximo = proximo->proximo;
         }
 
-        if (menor != atual) {
+        if (extremum != atual) {
             char* temp = atual->dado;
-            atual->dado = menor->dado;
-            menor->dado = temp;
-            quantidadeTrocas++;
+            atual->dado = extremum->dado;
+            extremum->dado = temp;
         }
 
         atual = atual->proximo;
     } while (atual != lista->inicio);
-
-    double fim = obterTempoAtual();
-    double tempoExecucao = calcularTempo(inicio, fim);
-
-    registrarDados("selection_sort", lista->tamanho, tempoExecucao, quantidadeTrocas);
 }
 
-void selectionSortListaNumeros(ListaCircularDupla* lista) {
+void selectionSortListaNumeros(ListaCircularDupla* lista, int crescente) {
     if (!lista || lista->tamanho < 2) return;
 
     No* atual = lista->inicio;
     do {
-        No* menor = atual;
+        No* extremum = atual;
         No* proximo = atual->proximo;
+
         while (proximo != lista->inicio) {
-            if (*(int*)proximo->dado < *(int*)menor->dado) {
-                menor = proximo;
+            if (crescente) {
+                if (*(int*)proximo->dado < *(int*)extremum->dado) {
+                    extremum = proximo;
+                }
+            } else {
+                if (*(int*)proximo->dado > *(int*)extremum->dado) {
+                    extremum = proximo;
+                }
             }
             proximo = proximo->proximo;
         }
 
-        if (menor != atual) {
+        if (extremum != atual) {
             int temp = *(int*)atual->dado;
-            *(int*)atual->dado = *(int*)menor->dado;
-            *(int*)menor->dado = temp;
+            *(int*)atual->dado = *(int*)extremum->dado;
+            *(int*)extremum->dado = temp;
         }
 
         atual = atual->proximo;

@@ -3,10 +3,10 @@
 
 #include "../include/data-structures/listaCircularDuplamenteEncadeada.h"
 
-void selectionSortVetorNumeros(int* vetor, int tamanho);
-void selectionSortVetorCaracteres(char** vetor, int tamanho);
+void selectionSortVetorNumeros(int* vetor, int tamanho, int crescente);
+void selectionSortVetorCaracteres(char** vetor, int tamanho, int crescente);
 
-void selectionSortListaCaracteres(ListaCircularDupla* lista);
-void selectionSortListaNumeros(ListaCircularDupla* lista);
+void selectionSortListaCaracteres(ListaCircularDupla* lista, int crescente);
+void selectionSortListaNumeros(ListaCircularDupla* lista, int crescente);
 
 #endif
