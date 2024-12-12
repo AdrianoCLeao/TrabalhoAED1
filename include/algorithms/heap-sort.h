@@ -3,12 +3,12 @@
 
 #include "../include/data-structures/listaCircularDuplamenteEncadeada.h"
 
-void criaHeapVetorNumeros(int* vetor, int inicio, int fim);
-void heapSortVetorNumeros(int* vetor, int tamanho);
-void criaHeapVetorCaracteres(char** vetor, int inicio, int fim);
-void heapSortVetorCaracteres(char** vetor, int tamanho);
+void criaHeapVetorNumeros(int* vetor, int inicio, int fim, int crescente);
+void heapSortVetorNumeros(int* vetor, int tamanho, int crescente);
+void criaHeapVetorCaracteres(char** vetor, int inicio, int fim, int crescente);
+void heapSortVetorCaracteres(char** vetor, int tamanho, int crescente);
 
-void heapSortListaCaracteres(ListaCircularDupla* lista);
-void heapSortListaNumeros(ListaCircularDupla* lista);
+void heapSortListaCaracteres(ListaCircularDupla* lista, int crescente);
+void heapSortListaNumeros(ListaCircularDupla* lista, int crescente);
 
 #endif

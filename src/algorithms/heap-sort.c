@@ -4,95 +4,99 @@
 #include <string.h>
 #include <stdlib.h>
 
-void criaHeapVetorNumeros(int* vetor, int inicio, int fim) {
-    int maior = inicio;
+void criaHeapVetorNumeros(int* vetor, int inicio, int fim, int crescente) {
+    int maiorMenor = inicio;
     int esquerda = 2 * inicio + 1;
     int direita = 2 * inicio + 2;
 
-    if (esquerda < fim && vetor[esquerda] > vetor[maior]) {
-        maior = esquerda;
+    if (crescente) {
+        if (esquerda < fim && vetor[esquerda] > vetor[maiorMenor]) {
+            maiorMenor = esquerda;
+        }
+        if (direita < fim && vetor[direita] > vetor[maiorMenor]) {
+            maiorMenor = direita;
+        }
+    } else {
+        if (esquerda < fim && vetor[esquerda] < vetor[maiorMenor]) {
+            maiorMenor = esquerda;
+        }
+        if (direita < fim && vetor[direita] < vetor[maiorMenor]) {
+            maiorMenor = direita;
+        }
     }
 
-    if (direita < fim && vetor[direita] > vetor[maior]) {
-        maior = direita;
-    }
-
-    if (maior != inicio) {
+    if (maiorMenor != inicio) {
         int temp = vetor[inicio];
-        vetor[inicio] = vetor[maior];
-        vetor[maior] = temp;
+        vetor[inicio] = vetor[maiorMenor];
+        vetor[maiorMenor] = temp;
 
-        criaHeapVetorNumeros(vetor, maior, fim);
+        criaHeapVetorNumeros(vetor, maiorMenor, fim, crescente);
     }
 }
 
-void heapSortVetorNumeros(int* vetor, int tamanho) {
-    int i;
+void heapSortVetorNumeros(int* vetor, int tamanho, int crescente) {
     if (!vetor || tamanho < 2) return;
 
-    for (i = tamanho / 2 - 1; i >= 0; i--) {
-        criaHeapVetorNumeros(vetor, i, tamanho);
+    for (int i = tamanho / 2 - 1; i >= 0; i--) {
+        criaHeapVetorNumeros(vetor, i, tamanho, crescente);
     }
 
-    for (i = tamanho - 1; i > 0; i--) {
+    for (int i = tamanho - 1; i > 0; i--) {
         int temp = vetor[0];
         vetor[0] = vetor[i];
         vetor[i] = temp;
 
-        criaHeapVetorNumeros(vetor, 0, i);
+        criaHeapVetorNumeros(vetor, 0, i, crescente);
     }
 }
 
-void criaHeapVetorCaracteres(char** vetor, int inicio, int fim) {
-    int maior = inicio;
+void criaHeapVetorCaracteres(char** vetor, int inicio, int fim, int crescente) {
+    int maiorMenor = inicio;
     int esquerda = 2 * inicio + 1;
     int direita = 2 * inicio + 2;
 
-    if (esquerda < fim && strcmp(vetor[esquerda], vetor[maior]) > 0) {
-        maior = esquerda;
+    if (crescente) {
+        if (esquerda < fim && strcmp(vetor[esquerda], vetor[maiorMenor]) > 0) {
+            maiorMenor = esquerda;
+        }
+        if (direita < fim && strcmp(vetor[direita], vetor[maiorMenor]) > 0) {
+            maiorMenor = direita;
+        }
+    } else {
+        if (esquerda < fim && strcmp(vetor[esquerda], vetor[maiorMenor]) < 0) {
+            maiorMenor = esquerda;
+        }
+        if (direita < fim && strcmp(vetor[direita], vetor[maiorMenor]) < 0) {
+            maiorMenor = direita;
+        }
     }
 
-    if (direita < fim && strcmp(vetor[direita], vetor[maior]) > 0) {
-        maior = direita;
-    }
-
-    if (maior != inicio) {
+    if (maiorMenor != inicio) {
         char* temp = vetor[inicio];
-        vetor[inicio] = vetor[maior];
-        vetor[maior] = temp;
+        vetor[inicio] = vetor[maiorMenor];
+        vetor[maiorMenor] = temp;
 
-        criaHeapVetorCaracteres(vetor, maior, fim);
+        criaHeapVetorCaracteres(vetor, maiorMenor, fim, crescente);
     }
 }
 
-void heapSortVetorCaracteres(char** vetor, int tamanho) {
-    int i;
-
+void heapSortVetorCaracteres(char** vetor, int tamanho, int crescente) {
     if (!vetor || tamanho < 2) return;
 
-    double inicio = obterTempoAtual();
-    int quantidadeTrocas = 0;
-
-    for (i = tamanho / 2 - 1; i >= 0; i--) {
-        criaHeapVetorCaracteres(vetor, i, tamanho);
+    for (int i = tamanho / 2 - 1; i >= 0; i--) {
+        criaHeapVetorCaracteres(vetor, i, tamanho, crescente);
     }
 
-    for (i = tamanho - 1; i > 0; i--) {
+    for (int i = tamanho - 1; i > 0; i--) {
         char* temp = vetor[0];
         vetor[0] = vetor[i];
         vetor[i] = temp;
-        quantidadeTrocas++;
 
-        criaHeapVetorCaracteres(vetor, 0, i);
+        criaHeapVetorCaracteres(vetor, 0, i, crescente);
     }
-
-    double fim = obterTempoAtual();
-    double tempoExecucao = calcularTempo(inicio, fim);
-
-    registrarDados("heap_sort_vetor", tamanho, tempoExecucao, quantidadeTrocas);
 }
 
-void heapSortListaCaracteres(ListaCircularDupla* lista) {
+void heapSortListaCaracteres(ListaCircularDupla* lista, int crescente) {
     int i;
 
     if (!lista || lista->tamanho < 2) return;
@@ -111,7 +115,7 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
     }
 
     for (i = tamanho / 2 - 1; i >= 0; i--) {
-        criaHeapVetorCaracteres(vetor, i, tamanho);
+        criaHeapVetorCaracteres(vetor, i, tamanho, crescente);
     }
 
     for (i = tamanho - 1; i > 0; i--) {
@@ -120,7 +124,7 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
         vetor[i] = temp;
         quantidadeTrocas++;
 
-        criaHeapVetorCaracteres(vetor, 0, i);
+        criaHeapVetorCaracteres(vetor, 0, i, crescente);
     }
 
     atual = lista->inicio;
@@ -137,7 +141,7 @@ void heapSortListaCaracteres(ListaCircularDupla* lista) {
     registrarDados("heap_sort_lista", lista->tamanho, tempoExecucao, quantidadeTrocas);
 }
 
-void heapSortListaNumeros(ListaCircularDupla* lista) {
+void heapSortListaNumeros(ListaCircularDupla* lista, int crescente)  {
     if (!lista || lista->tamanho < 2) return;
 
     int tamanho = lista->tamanho;
@@ -151,7 +155,7 @@ void heapSortListaNumeros(ListaCircularDupla* lista) {
     }
 
     for (int i = tamanho / 2 - 1; i >= 0; i--) {
-        criaHeapVetorNumeros(vetor, i, tamanho);
+        criaHeapVetorNumeros(vetor, i, tamanho, crescente);
     }
 
     for (int i = tamanho - 1; i > 0; i--) {
@@ -159,7 +163,7 @@ void heapSortListaNumeros(ListaCircularDupla* lista) {
         vetor[0] = vetor[i];
         vetor[i] = temp;
 
-        criaHeapVetorNumeros(vetor, 0, i);
+        criaHeapVetorNumeros(vetor, 0, i, crescente);
     }
 
     atual = lista->inicio;
